@@ -1,0 +1,16 @@
+{
+  "name": "indianpanorama-root",
+  "version": "1.0.0",
+  "description": "Root package for Indian Panorama project",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../admin && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:admin": "cd admin && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "npx concurrently \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
