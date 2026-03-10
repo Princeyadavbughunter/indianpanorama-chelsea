@@ -119,7 +119,7 @@ app.use('/api/slugs', slugRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/locations', locationRoutes);
 
-// SENSITIVE customer-data routes - fully protected by auth (GET, POST all require token)
+// SENSITIVE customer-data routes - fully protected by auth (GET, POST all require token except those whitelisted in adminAuth)
 app.use('/api/reservations', strictLimiter, adminAuth, reservationRoutes);
 app.use('/api/group-bookings', strictLimiter, adminAuth, groupBookingRoutes);
 app.use('/api/support', strictLimiter, adminAuth, supportRoutes);

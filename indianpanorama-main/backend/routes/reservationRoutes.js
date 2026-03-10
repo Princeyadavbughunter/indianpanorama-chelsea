@@ -1,7 +1,7 @@
 import express from 'express';
 import Reservation from '../models/Reservation.js';
 import Notification from '../models/Notification.js';
-import { sendReservationEmail } from '../utils/emailService.js';
+import { sendReservationEmail, sendCustomerConfirmationEmail } from '../utils/emailService.js';
 
 const router = express.Router();
 
@@ -28,17 +28,32 @@ router.post('/', async (req, res) => {
             type: 'Reservation'
         });
 
-        // Send Email Notification
-        const emailSent = await sendReservationEmail(newRes);
-        if (emailSent) {
-            console.log('Email process completed successfully for reservation:', newRes._id);
+        // Send Email Notifications
+        // Only try sending email if SMTP_USER is configured
+        if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+            // Send Admin Notification
+            const adminEmailSent = await sendReservationEmail(newRes);
+            if (adminEmailSent) {
+                console.log('Admin email notification completed successfully for reservation:', newRes._id);
+            } else {
+                console.error('Admin email notification failed for reservation:', newRes._id);
+            }
+
+            // Send Customer Confirmation
+            const customerEmailSent = await sendCustomerConfirmationEmail(newRes);
+            if (customerEmailSent) {
+                console.log('Customer confirmation email completed successfully for reservation:', newRes._id);
+            } else {
+                console.error('Customer confirmation email failed for reservation:', newRes._id);
+            }
         } else {
-            console.error('Email process failed for reservation:', newRes._id);
+            console.warn('Skipping email notification: SMTP credentials not configured in .env');
         }
 
         res.status(201).json(newRes);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        console.error('Reservation Error:', err);
+        res.status(400).json({ message: err.message || 'Failed to create reservation' });
     }
 });
 

@@ -23,7 +23,7 @@ export const sendReservationEmail = async (reservationData) => {
     try {
         const mailOptions = {
             from: process.env.SMTP_USER, // Sender address
-            to: 'princeyadav1803@gmail.com', // Admin email to receive the notification
+            to: process.env.SMTP_USER, // Admin email to receive the notification
             subject: 'New Reservation Received',
             html: `
                 <h2>New Reservation Received</h2>
@@ -44,13 +44,55 @@ export const sendReservationEmail = async (reservationData) => {
 
         const info = await transporter.sendMail(mailOptions);
         console.log('-----------------------------------------');
-        console.log('✅ EMAIL SENT SUCCESS: Reservation Notification');
+        console.log('✅ EMAIL SENT SUCCESS: Reservation Notification (Admin)');
         console.log('Message ID:', info.messageId);
         console.log('-----------------------------------------');
         return true;
     } catch (error) {
         console.error('-----------------------------------------');
-        console.error('❌ EMAIL SEND ERROR: Reservation Notification');
+        console.error('❌ EMAIL SEND ERROR: Reservation Notification (Admin)');
+        console.error('Error details:', error);
+        console.error('-----------------------------------------');
+        return false;
+    }
+};
+
+/**
+ * Sends a confirmation email to the customer who made a reservation.
+ * 
+ * @param {Object} reservationData - The data of the created reservation
+ */
+export const sendCustomerConfirmationEmail = async (reservationData) => {
+    try {
+        const mailOptions = {
+            from: process.env.SMTP_USER, // Sender address
+            to: reservationData.email, // Customer email
+            subject: 'Reservation Confirmation - Indian Panorama',
+            html: `
+                <h2>Thank you for choosing Indian Panorama</h2>
+                <p>Dear ${reservationData.name},</p>
+                <p>We have successfully received your reservation request. We look forward to hosting you!</p>
+                <h3>Your Reservation Details:</h3>
+                <ul>
+                    <li><strong>Date:</strong> ${new Date(reservationData.date).toLocaleDateString()}</li>
+                    <li><strong>Time:</strong> ${reservationData.time}</li>
+                    <li><strong>Guests:</strong> ${reservationData.guests}</li>
+                </ul>
+                <p>If you need to modify or cancel your reservation, please contact us directly.</p>
+                <br />
+                <p>Best Regards,<br>Indian Panorama Chelsea</p>
+            `
+        };
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log('-----------------------------------------');
+        console.log('✅ EMAIL SENT SUCCESS: Customer Confirmation');
+        console.log('Message ID:', info.messageId);
+        console.log('-----------------------------------------');
+        return true;
+    } catch (error) {
+        console.error('-----------------------------------------');
+        console.error('❌ EMAIL SEND ERROR: Customer Confirmation');
         console.error('Error details:', error);
         console.error('-----------------------------------------');
         return false;
