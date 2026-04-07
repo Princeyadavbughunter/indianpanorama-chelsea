@@ -42,7 +42,7 @@ console.error = (...args) => {
     originalError(...args);
 };
 
-dotenv.config();
+dotenv.config({ override: true });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

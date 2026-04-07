@@ -75,7 +75,11 @@ export function SlugManager() {
         });
 
         try {
-            const res = await fetch(url, { method, body: submitData });
+            const res = await fetch(url, { 
+                method, 
+                body: submitData,
+                headers: { 'Authorization': 'Bearer leela_admin_secret_123' }
+            });
             if (res.ok) {
                 fetchSlugs();
                 resetForm();

@@ -3,13 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import ReservationForm from "@/components/Resrvetion/form";
+import ReservationDrawer from "@/components/home/ReservationDrawer";
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isReservationOpen, setIsReservationOpen] = useState(false);
 
     const navItems = [
-        { name: "RESERVATIONS", href: "/reservation" },
+        { name: "RESERVATIONS", action: "open_reservation" },
         {
             name: "MENUS",
             submenu: [
@@ -26,8 +27,9 @@ const Header = () => {
     ];
 
     return (
-        <header
-            className="absolute top-0 left-0 right-0 z-50 flex items-center border-b px-3 md:px-0"
+        <>
+            <header
+                className="absolute top-0 left-0 right-0 z-50 flex items-center border-b px-3 md:px-0"
             style={{
                 width: "100%",
                 height: "94px",
@@ -97,20 +99,38 @@ const Header = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Link
-                                key={item.name}
-                                href={item.href!}
-                                className="flex items-center justify-center hover:text-white transition-colors duration-300 font-serif"
-                                style={{
-                                    height: "46px",
-                                    fontSize: "16px",
-                                    fontWeight: "400",
-                                    color: "#e2d6c1",
-                                    letterSpacing: "0.15em",
-                                }}
-                            >
-                                {item.name}
-                            </Link>
+                            item.action === "open_reservation" ? (
+                                <button
+                                    key={item.name}
+                                    onClick={() => setIsReservationOpen(true)}
+                                    className="flex items-center justify-center hover:text-white transition-colors duration-300 font-serif"
+                                    style={{
+                                        height: "46px",
+                                        fontSize: "16px",
+                                        fontWeight: "400",
+                                        color: "#e2d6c1",
+                                        letterSpacing: "0.15em",
+                                        cursor: "pointer"
+                                    }}
+                                >
+                                    {item.name}
+                                </button>
+                            ) : (
+                                <Link
+                                    key={item.name}
+                                    href={item.href!}
+                                    className="flex items-center justify-center hover:text-white transition-colors duration-300 font-serif"
+                                    style={{
+                                        height: "46px",
+                                        fontSize: "16px",
+                                        fontWeight: "400",
+                                        color: "#e2d6c1",
+                                        letterSpacing: "0.15em",
+                                    }}
+                                >
+                                    {item.name}
+                                </Link>
+                            )
                         )
                     ))}
                 </nav>
@@ -162,23 +182,44 @@ const Header = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Link
-                                key={item.name}
-                                href={item.href!}
-                                className="text-lg font-serif tracking-widest hover:text-[#CBAC70] transition-colors"
-                                style={{ color: "#e2d6c1" }}
-                                onClick={() => {
-                                    setIsMenuOpen(false);
-                                }}
-                            >
-                                {item.name}
-                            </Link>
+                            item.action === "open_reservation" ? (
+                                <button
+                                    key={item.name}
+                                    onClick={() => {
+                                        setIsReservationOpen(true);
+                                        setIsMenuOpen(false);
+                                    }}
+                                    className="text-lg font-serif tracking-widest hover:text-[#CBAC70] transition-colors text-left"
+                                    style={{ color: "#e2d6c1" }}
+                                >
+                                    {item.name}
+                                </button>
+                            ) : (
+                                <Link
+                                    key={item.name}
+                                    href={item.href!}
+                                    className="text-lg font-serif tracking-widest hover:text-[#CBAC70] transition-colors"
+                                    style={{ color: "#e2d6c1" }}
+                                    onClick={() => {
+                                        setIsMenuOpen(false);
+                                    }}
+                                >
+                                    {item.name}
+                                </Link>
+                            )
                         )
                     ))}
                 </nav>
             </div>
 
         </header>
+
+            {/* Custom OpenTable Reservation Drawer */}
+            <ReservationDrawer 
+                isOpen={isReservationOpen} 
+                onClose={() => setIsReservationOpen(false)} 
+            />
+        </>
     );
 };
 

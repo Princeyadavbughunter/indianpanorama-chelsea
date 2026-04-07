@@ -4,7 +4,7 @@ import Head from 'next/head';
 
 async function getSlugData(slug: string) {
     try {
-        const res = await fetch(`https://api.indianpanoramachelsea.co.uk/api/slugs/path/${slug}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slugs/path/${slug}`, {
             next: { revalidate: 60 } // Revalidate every minute
         });
         if (!res.ok) {
@@ -53,7 +53,7 @@ export default async function SlugPage({ params }: { params: Promise<{ slug: str
             }}>
                 {data.image && (
                     <img
-                        src={`https://api.indianpanoramachelsea.co.uk${data.image}`}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${data.image}`}
                         alt={data.title}
                         style={{
                             maxWidth: '100%',

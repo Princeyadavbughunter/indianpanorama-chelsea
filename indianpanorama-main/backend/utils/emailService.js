@@ -1,11 +1,8 @@
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-// Create a transporter using environment variables
-// It assumes SMTP details from env or falls back to standard defaults if needed
-const transporter = nodemailer.createTransport({
+// Create transporter lazily so it always reads the env vars at call-time
+// (after dotenv.config() has already been called by server.js)
+const getTransporter = () => nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.SMTP_USER,
@@ -42,7 +39,7 @@ export const sendReservationEmail = async (reservationData) => {
             `
         };
 
-        const info = await transporter.sendMail(mailOptions);
+        const info = await getTransporter().sendMail(mailOptions);
         console.log('-----------------------------------------');
         console.log('✅ EMAIL SENT SUCCESS: Reservation Notification (Admin)');
         console.log('Message ID:', info.messageId);
@@ -84,7 +81,7 @@ export const sendCustomerConfirmationEmail = async (reservationData) => {
             `
         };
 
-        const info = await transporter.sendMail(mailOptions);
+        const info = await getTransporter().sendMail(mailOptions);
         console.log('-----------------------------------------');
         console.log('✅ EMAIL SENT SUCCESS: Customer Confirmation');
         console.log('Message ID:', info.messageId);
@@ -125,7 +122,7 @@ export const sendGroupBookingEmail = async (bookingData) => {
             `
         };
 
-        const info = await transporter.sendMail(mailOptions);
+        const info = await getTransporter().sendMail(mailOptions);
         console.log('-----------------------------------------');
         console.log('✅ EMAIL SENT SUCCESS: Group Booking Notification');
         console.log('Message ID:', info.messageId);

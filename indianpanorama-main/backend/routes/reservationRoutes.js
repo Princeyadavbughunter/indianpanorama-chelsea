@@ -2,6 +2,7 @@ import express from 'express';
 import Reservation from '../models/Reservation.js';
 import Notification from '../models/Notification.js';
 import { sendReservationEmail, sendCustomerConfirmationEmail } from '../utils/emailService.js';
+import { sendReservationWhatsApp } from '../utils/whatsappService.js';
 
 const router = express.Router();
 
@@ -49,6 +50,9 @@ router.post('/', async (req, res) => {
         } else {
             console.warn('Skipping email notification: SMTP credentials not configured in .env');
         }
+
+        // Send WhatsApp Notification (AiSensy)
+        await sendReservationWhatsApp(newRes);
 
         res.status(201).json(newRes);
     } catch (err) {
