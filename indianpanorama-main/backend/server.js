@@ -20,6 +20,7 @@ import slugRoutes from './routes/slugRoutes.js';
 import visitorRoutes from './routes/visitorRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import groupBookingRoutes from './routes/groupBookingRoutes.js';
+import diagnosticRoutes from './routes/diagnosticRoutes.js';
 import { adminAuth } from './middleware/adminAuth.js';
 import fs from 'fs';
 
@@ -49,6 +50,9 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Trust the first proxy (Nginx) - required for express-rate-limit to work behind a reverse proxy
+app.set('trust proxy', 1);
 
 // Global request logger for debugging
 app.use((req, res, next) => {
@@ -127,6 +131,7 @@ app.use('/api/visitors', adminAuth, visitorRoutes);
 app.use('/api/notifications', adminAuth, notificationRoutes);
 app.use('/api/dashboard', adminAuth, dashboardRoutes);
 app.use('/api/giftcards', adminAuth, giftcardRoutes);
+app.use('/api/diagnostics', adminAuth, diagnosticRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

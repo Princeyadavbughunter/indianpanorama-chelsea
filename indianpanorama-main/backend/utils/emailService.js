@@ -30,8 +30,8 @@ export const sendReservationEmail = async (reservationData) => {
                     <li><strong>Email:</strong> ${reservationData.email}</li>
                     <li><strong>Phone:</strong> ${reservationData.phone}</li>
                     <li><strong>Guests:</strong> ${reservationData.guests}</li>
-                    <li><strong>Date:</strong> ${new Date(reservationData.date).toLocaleDateString()}</li>
-                    <li><strong>Time:</strong> ${reservationData.time}</li>
+                    <li><strong>Date:</strong> ${new Date(reservationData.date).toLocaleDateString('en-GB', { timeZone: 'Europe/London', weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}</li>
+                    <li><strong>Time:</strong> ${reservationData.time} (UK time)</li>
                     <li><strong>Special Requests:</strong> ${reservationData.specialRequests || 'None'}</li>
                 </ul>
                 <br />
@@ -71,8 +71,8 @@ export const sendCustomerConfirmationEmail = async (reservationData) => {
                 <p>We have successfully received your reservation request. We look forward to hosting you!</p>
                 <h3>Your Reservation Details:</h3>
                 <ul>
-                    <li><strong>Date:</strong> ${new Date(reservationData.date).toLocaleDateString()}</li>
-                    <li><strong>Time:</strong> ${reservationData.time}</li>
+                    <li><strong>Date:</strong> ${new Date(reservationData.date).toLocaleDateString('en-GB', { timeZone: 'Europe/London', weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}</li>
+                    <li><strong>Time:</strong> ${reservationData.time} (UK time)</li>
                     <li><strong>Guests:</strong> ${reservationData.guests}</li>
                 </ul>
                 <p>If you need to modify or cancel your reservation, please contact us directly.</p>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const faqData = [
+export const faqData = [
     {
         question: "Dietary Concerns",
         answer: "Vegan, vegetarian, and gluten-free options are available. For specific dietary requirements or allergies, we kindly request a minimum of 24 hours’ notice. Please note, however, that while every effort is made to accommodate your needs, we cannot guarantee the absence of trace allergens in our dishes."

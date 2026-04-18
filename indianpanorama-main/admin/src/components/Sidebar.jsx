@@ -1,35 +1,62 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
-    PlusSquare,
-    Edit3,
-    FileText,
+    UtensilsCrossed,
+    ChefHat,
+    Newspaper,
     CalendarDays,
-    Star,
+    Sparkles,
+    Users as UsersIcon,
     Gift,
-    MapPin,
-    HelpCircle,
+    LinkIcon,
+    LifeBuoy,
     Settings,
     LogOut
 } from 'lucide-react';
 
-const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'add-menu', label: 'Add Menu', icon: PlusSquare },
-    { id: 'edit-menu', label: 'Edit Menu', icon: Edit3 },
-    { id: 'blogs', label: 'Blogs', icon: FileText },
-    { id: 'reservations', label: 'Reservations', icon: CalendarDays },
-    { id: 'events', label: 'Events', icon: Star },
-    { id: 'group-bookings', label: 'Group Bookings', icon: Star },
-    { id: 'gift-cards', label: 'Gift Cards', icon: Gift },
-    { id: 'slugs', label: 'Slugs', icon: LayoutDashboard },
-    { id: 'support', label: 'Support', icon: HelpCircle },
-    { id: 'settings', label: 'Settings', icon: Settings },
+const navGroups = [
+    {
+        heading: 'Overview',
+        items: [
+            { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/admin' },
+        ],
+    },
+    {
+        heading: 'Kitchen & Content',
+        items: [
+            { id: 'add-menu', label: 'Add Menu', icon: ChefHat, path: '/admin/menu' },
+            { id: 'edit-menu', label: 'Edit Menu', icon: UtensilsCrossed, path: '/admin/menu' },
+            { id: 'blogs', label: 'Blog Posts', icon: Newspaper, path: '/admin/blogs' },
+            { id: 'events', label: 'Events', icon: Sparkles, path: '/admin/events' },
+            { id: 'slugs', label: 'Landing Pages', icon: LinkIcon, path: '/admin/slugs' },
+        ],
+    },
+    {
+        heading: 'Guests',
+        items: [
+            { id: 'reservations', label: 'Reservations', icon: CalendarDays, path: '/admin/reservations' },
+            { id: 'group-bookings', label: 'Group Bookings', icon: UsersIcon, path: '/admin/group-bookings' },
+            { id: 'gift-cards', label: 'Gift Cards', icon: Gift, path: '/admin/gift-cards' },
+            { id: 'support', label: 'Support', icon: LifeBuoy, path: '/admin/support' },
+        ],
+    },
+    {
+        heading: 'System',
+        items: [
+            { id: 'settings', label: 'Settings', icon: Settings, path: '/admin/settings' },
+        ],
+    },
 ];
 
-export function Sidebar({ activeItem = 'dashboard' }) {
+export function Sidebar() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const isActive = (item) => {
+        if (item.id === 'dashboard') return location.pathname === '/admin' || location.pathname === '/admin/';
+        return location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+    };
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -39,53 +66,115 @@ export function Sidebar({ activeItem = 'dashboard' }) {
 
     return (
         <aside className="sidebar">
-            <div className="sidebar-header" style={{ padding: '24px 32px', borderBottom: '1px solid var(--color-border)' }}>
-                <h2 style={{ margin: 0, color: 'var(--color-primary-accent)', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '12px', fontWeight: '700', letterSpacing: '-0.5px' }}>
-                    <div style={{ width: '32px', height: '32px', backgroundColor: 'var(--color-bg-hover)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 10px var(--color-primary-glow)' }}>
-                        <LayoutDashboard size={20} color="var(--color-primary-accent)" />
-                    </div>
-                    Portal
-                </h2>
-                <p style={{ margin: '4px 0 0 44px', fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: '500' }}>Management System</p>
+            {/* Brand */}
+            <div style={{
+                padding: '24px 22px 20px',
+                borderBottom: '1px solid var(--color-border)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px'
+            }}>
+                <div style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: 12,
+                    background: 'linear-gradient(135deg, var(--brand-green-deep), var(--brand-green))',
+                    color: 'var(--brand-gold)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 6px 18px rgba(22, 29, 24, 0.22)',
+                    flexShrink: 0,
+                }}>
+                    <UtensilsCrossed size={20} strokeWidth={1.8} />
+                </div>
+                <div style={{ minWidth: 0 }}>
+                    <h2 className="font-serif-display" style={{
+                        margin: 0,
+                        fontSize: '1.22rem',
+                        color: 'var(--brand-green-deep)',
+                        lineHeight: 1.1,
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                    }}>Indian Panorama</h2>
+                    <p style={{
+                        margin: '3px 0 0 0',
+                        fontSize: '0.7rem',
+                        color: 'var(--brand-gold-deep)',
+                        fontWeight: 600,
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                    }}>Chelsea · Admin</p>
+                </div>
             </div>
 
-            <nav className="sidebar-nav" style={{ flex: 1, padding: '24px 16px', overflowY: 'auto' }}>
-                <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {navItems.map((item) => {
-                        const isActive = activeItem === item.id;
-                        const Icon = item.icon;
-                        return (
-                            <li key={item.id}>
-                                <a
-                                    href="#"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        navigate(`/admin/${item.id === 'dashboard' ? '' : item.id === 'add-menu' || item.id === 'edit-menu' ? 'menu' : item.id === 'blogs' ? 'blogs' : item.id}`);
-                                    }}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '12px',
-                                        padding: '12px 16px',
-                                        borderRadius: 'var(--radius-md)',
-                                        color: isActive ? 'var(--color-primary-accent)' : 'var(--color-text-secondary)',
-                                        backgroundColor: isActive ? 'var(--color-bg-active)' : 'transparent',
-                                        transition: 'all var(--transition-fast)',
-                                        fontWeight: isActive ? 600 : 500,
-                                        borderLeft: isActive ? '4px solid var(--color-primary-accent)' : '4px solid transparent',
-                                        boxShadow: isActive ? 'inset 2px 0 0 var(--color-primary-accent), 0 4px 12px rgba(0,0,0,0.1)' : 'none'
-                                    }}
-                                >
-                                    <Icon size={20} />
-                                    {item.label}
-                                </a>
-                            </li>
-                        );
-                    })}
-                </ul>
+            {/* Nav */}
+            <nav style={{ flex: 1, padding: '18px 14px', overflowY: 'auto' }}>
+                {navGroups.map((group) => (
+                    <div key={group.heading} style={{ marginBottom: '18px' }}>
+                        <div style={{
+                            padding: '4px 14px 8px',
+                            fontSize: '0.67rem',
+                            fontWeight: 700,
+                            color: 'var(--color-text-muted)',
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                        }}>
+                            {group.heading}
+                        </div>
+                        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                            {group.items.map((item) => {
+                                const active = isActive(item);
+                                const Icon = item.icon;
+                                return (
+                                    <li key={item.id}>
+                                        <a
+                                            href={item.path}
+                                            onClick={(e) => { e.preventDefault(); navigate(item.path); }}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '12px',
+                                                padding: '10px 14px',
+                                                borderRadius: 'var(--radius-md)',
+                                                color: active ? 'var(--brand-green-deep)' : 'var(--color-text-secondary)',
+                                                background: active
+                                                    ? 'linear-gradient(90deg, var(--brand-gold-soft), transparent 120%)'
+                                                    : 'transparent',
+                                                fontWeight: active ? 600 : 500,
+                                                fontSize: '0.9rem',
+                                                position: 'relative',
+                                                transition: 'all var(--transition-fast)',
+                                                borderLeft: active ? '3px solid var(--brand-gold)' : '3px solid transparent',
+                                                paddingLeft: active ? '11px' : '14px',
+                                            }}
+                                            onMouseOver={(e) => {
+                                                if (!active) {
+                                                    e.currentTarget.style.background = 'var(--brand-cream)';
+                                                    e.currentTarget.style.color = 'var(--brand-green-deep)';
+                                                }
+                                            }}
+                                            onMouseOut={(e) => {
+                                                if (!active) {
+                                                    e.currentTarget.style.background = 'transparent';
+                                                    e.currentTarget.style.color = 'var(--color-text-secondary)';
+                                                }
+                                            }}
+                                        >
+                                            <Icon size={18} strokeWidth={active ? 2.2 : 1.8} color={active ? 'var(--brand-gold-deep)' : 'currentColor'} />
+                                            <span>{item.label}</span>
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                ))}
             </nav>
 
-            <div className="sidebar-footer" style={{ padding: '24px 16px', borderTop: '1px solid var(--color-border)' }}>
+            {/* Footer */}
+            <div style={{ padding: '16px 14px', borderTop: '1px solid var(--color-border)' }}>
                 <a
                     href="#"
                     onClick={handleLogout}
@@ -93,23 +182,24 @@ export function Sidebar({ activeItem = 'dashboard' }) {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '12px',
-                        padding: '12px 16px',
+                        padding: '10px 14px',
                         color: 'var(--color-text-secondary)',
                         fontWeight: 500,
+                        fontSize: '0.9rem',
                         borderRadius: 'var(--radius-md)',
                         transition: 'all var(--transition-fast)',
                     }}
                     onMouseOver={(e) => {
                         e.currentTarget.style.color = 'var(--color-danger)';
-                        e.currentTarget.style.backgroundColor = 'rgba(217, 83, 79, 0.1)';
+                        e.currentTarget.style.backgroundColor = 'rgba(192, 68, 58, 0.08)';
                     }}
                     onMouseOut={(e) => {
                         e.currentTarget.style.color = 'var(--color-text-secondary)';
                         e.currentTarget.style.backgroundColor = 'transparent';
                     }}
                 >
-                    <LogOut size={20} />
-                    Logout
+                    <LogOut size={18} strokeWidth={1.8} />
+                    <span>Logout</span>
                 </a>
             </div>
         </aside>

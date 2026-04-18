@@ -9,7 +9,7 @@ export default function Focus() {
                 <div className="w-full md:w-[476px] h-[400px] md:h-[700px] relative shrink-0 group overflow-hidden rounded-lg md:rounded-none">
                     <Image
                         src="/images/restaurant.png"
-                        alt="Restaurant Interior"
+                        alt="Interior of Indian Panorama Chelsea — elegant regional Indian fine-dining space on Draycott Avenue, SW3"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />

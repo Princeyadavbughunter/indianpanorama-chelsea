@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         // Generate Admin Notification
         await Notification.create({
             title: 'New Reservation',
-            message: `${newRes.name} booked a table for ${newRes.guests} guests on ${new Date(newRes.date).toLocaleDateString()}`,
+            message: `${newRes.name} booked a table for ${newRes.guests} guests on ${new Date(newRes.date).toLocaleDateString('en-GB', { timeZone: 'Europe/London', day: '2-digit', month: '2-digit', year: 'numeric' })} at ${newRes.time}`,
             type: 'Reservation'
         });
 

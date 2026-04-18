@@ -1,18 +1,16 @@
-/* Card */
+/* ─── Card ─── */
 .card {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--color-bg-card);
     border-radius: var(--radius-lg);
     padding: 24px;
     box-shadow: var(--shadow-sm);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--color-border);
     transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 
 .card:hover {
-    box-shadow: var(--shadow-md), 0 0 15px rgba(124, 58, 237, 0.05);
-    border-color: rgba(124, 58, 237, 0.2);
+    box-shadow: var(--shadow-md);
+    border-color: var(--brand-gold-soft);
     transform: translateY(-2px);
 }
 
@@ -30,7 +28,7 @@
     margin: 0;
 }
 
-/* Button */
+/* ─── Button ─── */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -38,35 +36,38 @@
     gap: 8px;
     padding: 10px 20px;
     border-radius: var(--radius-md);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.875rem;
     transition: all var(--transition-fast);
     border: none;
     outline: none;
+    letter-spacing: 0.01em;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--color-primary-accent) 0%, var(--color-primary-light) 100%);
-    color: var(--color-text-inverse);
-    border: 1px solid transparent;
-    box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.2), 0 2px 4px -1px rgba(124, 58, 237, 0.1);
+    background: linear-gradient(135deg, var(--brand-gold) 0%, var(--brand-gold-deep) 100%);
+    color: var(--brand-green-deep);
+    border: 1px solid rgba(176, 143, 85, 0.4);
+    box-shadow: 0 4px 14px -2px rgba(203, 172, 112, 0.45);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 6px 12px -2px rgba(124, 58, 237, 0.3), 0 3px 6px -2px rgba(124, 58, 237, 0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 22px -4px rgba(203, 172, 112, 0.55);
+    transform: translateY(-1px);
+    filter: brightness(1.04);
 }
 
 .btn-secondary {
-    background-color: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(4px);
-    border: 1px solid var(--color-border);
+    background-color: #ffffff;
+    border: 1px solid var(--color-border-strong);
     color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-color: var(--color-text-muted);
+    background-color: var(--brand-cream-2);
+    border-color: var(--brand-gold);
+    color: var(--brand-green-deep);
 }
 
 .btn-ghost {
@@ -77,34 +78,40 @@
 
 .btn-ghost:hover {
     background-color: var(--color-bg-hover);
-    color: var(--color-text-primary);
+    color: var(--brand-gold-deep);
 }
 
-/* Badge */
+/* ─── Badge ─── */
 .badge {
     display: inline-flex;
     align-items: center;
     padding: 4px 10px;
     border-radius: var(--radius-full);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
 }
 
 .badge-success {
-    background-color: rgba(46, 139, 87, 0.2);
-    color: #4ade80;
-    border: 1px solid rgba(74, 222, 128, 0.2);
+    background-color: rgba(94, 143, 82, 0.12);
+    color: var(--color-success);
+    border: 1px solid rgba(94, 143, 82, 0.25);
 }
 
 .badge-warning {
-    background-color: rgba(240, 173, 78, 0.1);
+    background-color: rgba(209, 154, 74, 0.12);
     color: var(--color-warning);
-    border: 1px solid rgba(240, 173, 78, 0.2);
+    border: 1px solid rgba(209, 154, 74, 0.25);
 }
 
-/* Icons */
+.badge-danger {
+    background-color: rgba(192, 68, 58, 0.1);
+    color: var(--color-danger);
+    border: 1px solid rgba(192, 68, 58, 0.2);
+}
+
+/* ─── Soft icon chip ─── */
 .icon-soft {
     display: flex;
     align-items: center;
@@ -112,11 +119,11 @@
     width: 48px;
     height: 48px;
     border-radius: var(--radius-md);
-    background-color: rgba(124, 58, 237, 0.1);
-    color: var(--color-primary-accent);
+    background-color: var(--brand-gold-soft);
+    color: var(--brand-gold-deep);
 }
 
-/* Tables */
+/* ─── Tables ─── */
 .table-container {
     width: 100%;
     overflow-x: auto;
@@ -129,20 +136,31 @@ table {
 
 th {
     text-align: left;
-    padding: 12px 16px;
+    padding: 14px 16px;
     color: var(--color-text-muted);
-    font-weight: 500;
-    font-size: 0.875rem;
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     border-bottom: 1px solid var(--color-border);
+    background: var(--brand-cream);
 }
 
 td {
     padding: 16px;
     color: var(--color-text-primary);
-    font-size: 0.875rem;
+    font-size: 0.895rem;
     border-bottom: 1px solid var(--color-border);
 }
 
 tr:last-child td {
     border-bottom: none;
+}
+
+tbody tr {
+    transition: background var(--transition-fast);
+}
+
+tbody tr:hover {
+    background: var(--brand-cream);
 }

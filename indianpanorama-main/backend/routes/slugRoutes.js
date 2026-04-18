@@ -44,6 +44,18 @@ router.get('/path/:slug', async (req, res) => {
     }
 });
 
+// Parse bookingButtons from a FormData JSON string into an array.
+const parseBookingButtons = (raw) => {
+    if (!raw) return [];
+    if (Array.isArray(raw)) return raw;
+    try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+};
+
 // Create new slug page
 router.post('/', adminAuth, upload.single('image'), async (req, res) => {
     try {
@@ -51,6 +63,7 @@ router.post('/', adminAuth, upload.single('image'), async (req, res) => {
         if (req.file) {
             slugData.image = `/uploads/${req.file.filename}`;
         }
+        slugData.bookingButtons = parseBookingButtons(slugData.bookingButtons);
 
         const item = new Slug(slugData);
         const savedItem = await item.save();
@@ -64,14 +77,19 @@ router.post('/', adminAuth, upload.single('image'), async (req, res) => {
 router.put('/:id', adminAuth, upload.single('image'), async (req, res) => {
     try {
         const slugData = { ...req.body };
-        if (req.file) {
-            slugData.image = `/uploads/${req.file.filename}`;
-        }
 
-        // Remove 'image' from payload if no new file is uploaded to prevent blanking the existing image
-        if (!req.file && slugData.image === 'null') {
+        if (req.file) {
+            // New upload → replace.
+            slugData.image = `/uploads/${req.file.filename}`;
+        } else if (slugData.image === '') {
+            // Explicit empty string from admin = user asked to clear the image.
+            slugData.image = '';
+        } else {
+            // No new file and no clear signal → don't touch the existing image.
             delete slugData.image;
         }
+
+        slugData.bookingButtons = parseBookingButtons(slugData.bookingButtons);
 
         const updated = await Slug.findByIdAndUpdate(req.params.id, slugData, { new: true });
         res.json(updated);

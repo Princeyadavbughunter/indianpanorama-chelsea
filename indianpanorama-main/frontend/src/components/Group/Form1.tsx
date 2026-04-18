@@ -44,7 +44,7 @@ const Form1 = () => {
                 <div className="w-full md:w-1/2 relative min-h-[500px] md:min-h-auto">
                     <Image
                         src="/Group/1.jpeg"
-                        alt="Group Dining"
+                        alt="Group dining table set for a private event at Indian Panorama Chelsea"
                         fill
                         className="object-cover object-center"
                     />

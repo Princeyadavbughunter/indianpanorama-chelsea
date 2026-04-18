@@ -48,7 +48,7 @@ const Header = () => {
                     <Link href="/">
                         <Image
                             src="/images/logo2.png"
-                            alt="Logo"
+                            alt="Indian Panorama Chelsea logo"
                             width={140}
                             height={58}
                             className="object-contain h-[58px] w-auto brightness-110"

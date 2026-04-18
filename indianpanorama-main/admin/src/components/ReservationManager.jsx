@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
 
+const UK_TZ = 'Europe/London';
+const formatUKDate = (value) => value ? new Date(value).toLocaleDateString('en-GB', { timeZone: UK_TZ, day: '2-digit', month: '2-digit', year: 'numeric' }) : '';
+const toUKDateInput = (value) => value ? new Date(value).toLocaleDateString('en-CA', { timeZone: UK_TZ }) : '';
+
 export function ReservationManager() {
     const [items, setItems] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
@@ -51,7 +55,7 @@ export function ReservationManager() {
     const handleEdit = (item) => {
         setFormData({
             name: item.name, email: item.email, phone: item.phone,
-            date: new Date(item.date).toISOString().split('T')[0],
+            date: toUKDateInput(item.date),
             time: item.time, guests: item.guests, specialRequests: item.specialRequests || '', status: item.status
         });
         setCurrentId(item._id);
@@ -115,7 +119,7 @@ export function ReservationManager() {
                         {items.map(item => (
                             <tr key={item._id} style={{ borderBottom: '1px solid var(--color-border)' }}>
                                 <td style={{ padding: '16px', fontWeight: 500 }}>{item.name}</td>
-                                <td style={{ padding: '16px', color: 'var(--color-text-secondary)' }}>{new Date(item.date).toLocaleDateString()} at {item.time}</td>
+                                <td style={{ padding: '16px', color: 'var(--color-text-secondary)' }}>{formatUKDate(item.date)} at {item.time}</td>
                                 <td style={{ padding: '16px', color: 'var(--color-text-secondary)' }}>{item.guests}</td>
                                 <td style={{ padding: '16px', textAlign: 'center' }}>
                                     <span style={{ padding: '4px 8px', borderRadius: '12px', fontSize: '12px', background: item.status === 'Confirmed' ? 'rgba(46, 204, 113, 0.1)' : 'rgba(241, 196, 15, 0.1)', color: item.status === 'Confirmed' ? '#2ecc71' : '#f1c40f' }}>

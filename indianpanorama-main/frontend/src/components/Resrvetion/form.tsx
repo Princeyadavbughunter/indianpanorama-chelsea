@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { COUNTRY_CODES, DEFAULT_COUNTRY, keyFor } from "./countryCodes";
 
 interface ReservationFormProps {
     onClose?: () => void;
@@ -11,6 +12,7 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
     const [formData, setFormData] = useState({
         name: '', email: '', phone: '', date: '', time: '', guests: 1, specialRequests: ''
     });
+    const [countryKey, setCountryKey] = useState<string>(keyFor(DEFAULT_COUNTRY));
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
 
@@ -31,7 +33,14 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-            const payload = { ...formData, guests: Number(formData.guests) };
+            const country = COUNTRY_CODES.find(c => keyFor(c) === countryKey) ?? DEFAULT_COUNTRY;
+            const localDigits = formData.phone.replace(/\D/g, '').replace(/^0+/, '');
+            const fullPhone = `+${country.code}${localDigits}`;
+            const payload = {
+                ...formData,
+                phone: fullPhone,
+                guests: Number(formData.guests),
+            };
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reservations`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -125,20 +134,36 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
                             />
                         </div>
 
-                        {/* Mobile */}
+                        {/* Mobile with country code */}
                         <div className="space-y-2">
                             <label className="block text-[#e2d6c1] text-[13px] tracking-wider uppercase font-semibold">
                                 Mobile No. <span className="text-[#CBAC70]">*</span>
                             </label>
-                            <input
-                                type="tel"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                required
-                                className="w-full h-[48px] px-4 bg-[#1d2620] border border-[#CBAC70]/20 text-[#e2d6c1] rounded-md focus:outline-none focus:border-[#CBAC70] focus:ring-1 focus:ring-[#CBAC70] transition-colors placeholder-[#e2d6c1]/30"
-                                placeholder="+1 (555) 000-0000"
-                            />
+                            <div className="flex gap-2">
+                                <select
+                                    value={countryKey}
+                                    onChange={(e) => setCountryKey(e.target.value)}
+                                    aria-label="Country dial code"
+                                    className="h-[48px] w-[110px] shrink-0 px-2 bg-[#1d2620] border border-[#CBAC70]/20 text-[#e2d6c1] rounded-md focus:outline-none focus:border-[#CBAC70] focus:ring-1 focus:ring-[#CBAC70] transition-colors text-[14px] [color-scheme:dark] cursor-pointer"
+                                >
+                                    {COUNTRY_CODES.map((c) => (
+                                        <option key={keyFor(c)} value={keyFor(c)} className="bg-[#1d2620] text-[#e2d6c1]">
+                                            {c.flag} +{c.code} {c.iso}
+                                        </option>
+                                    ))}
+                                </select>
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    required
+                                    inputMode="numeric"
+                                    pattern="[0-9\s]{6,15}"
+                                    className="flex-1 min-w-0 h-[48px] px-4 bg-[#1d2620] border border-[#CBAC70]/20 text-[#e2d6c1] rounded-md focus:outline-none focus:border-[#CBAC70] focus:ring-1 focus:ring-[#CBAC70] transition-colors placeholder-[#e2d6c1]/30"
+                                    placeholder="7911 123456"
+                                />
+                            </div>
                         </div>
 
                         {/* No of Guests */}

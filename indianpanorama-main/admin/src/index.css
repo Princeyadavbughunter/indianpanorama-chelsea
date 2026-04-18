@@ -1,67 +1,85 @@
 @import './components.css';
 
 :root {
-  /* Brand Colors */
-  --color-bg-main: #f8fafc;
-  /* Very light slate/grey */
-  --color-bg-card: rgba(255, 255, 255, 0.7);
-  /* Translucent white */
-  --color-bg-hover: rgba(124, 58, 237, 0.08);
-  /* Faint purple hover */
-  --color-bg-active: rgba(124, 58, 237, 0.15);
-  /* Active faint purple */
+  /* ─── Restaurant Brand Palette ─── */
+  --brand-gold: #CBAC70;
+  --brand-gold-deep: #b08f55;
+  --brand-gold-soft: rgba(203, 172, 112, 0.12);
+  --brand-gold-glow: rgba(203, 172, 112, 0.25);
 
-  --color-primary-accent: #7c3aed;
-  /* Vibrant violet */
-  --color-primary-light: #8b5cf6;
-  --color-primary-glow: rgba(124, 58, 237, 0.2);
+  --brand-green: #2c3e33;
+  --brand-green-deep: #161d18;
+  --brand-green-soft: rgba(22, 29, 24, 0.06);
 
-  --color-secondary-accent: #0ea5e9;
-  /* Electric blue */
+  --brand-cream: #faf7f0;
+  --brand-cream-2: #f3ecdb;
+  --brand-sand: #efe7d4;
 
-  /* Text Colors */
-  --color-text-primary: #0f172a;
-  /* Dark slate */
-  --color-text-secondary: #475569;
-  /* Medium slate */
-  --color-text-muted: #64748b;
-  /* Soft slate */
+  --brand-rust: #b9663b;
+  --brand-rust-soft: rgba(185, 102, 59, 0.1);
+
+  --brand-sage: #6e8b6a;
+  --brand-sage-soft: rgba(110, 139, 106, 0.12);
+
+  --brand-burgundy: #7c2d3b;
+
+  /* ─── Surfaces ─── */
+  --color-bg-main: var(--brand-cream);
+  --color-bg-body: #fbf8f2;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: var(--brand-gold-soft);
+  --color-bg-active: rgba(203, 172, 112, 0.18);
+
+  /* ─── Primary (gold) ─── */
+  --color-primary-accent: var(--brand-gold);
+  --color-primary-light: #d8be8a;
+  --color-primary-glow: var(--brand-gold-glow);
+
+  --color-secondary-accent: var(--brand-green);
+
+  /* ─── Text ─── */
+  --color-text-primary: #1f2a24;
+  --color-text-secondary: #5a6761;
+  --color-text-muted: #8a948f;
   --color-text-inverse: #ffffff;
-  /* White text on dark buttons */
 
-  /* UI Colors */
-  --color-border: rgba(15, 23, 42, 0.1);
-  /* Subtle dark border */
-  --color-success: #10b981;
-  --color-danger: #ef4444;
-  --color-info: #0ea5e9;
-  --color-warning: #f59e0b;
+  /* ─── UI ─── */
+  --color-border: rgba(44, 62, 51, 0.1);
+  --color-border-strong: rgba(44, 62, 51, 0.16);
+  --color-success: #5e8f52;
+  --color-danger: #c0443a;
+  --color-info: #3e7c8c;
+  --color-warning: #d19a4a;
 
-  /* Shadows */
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 0 20px var(--color-primary-glow);
+  /* ─── Shadows ─── */
+  --shadow-sm: 0 1px 2px rgba(22, 29, 24, 0.04), 0 2px 6px rgba(22, 29, 24, 0.03);
+  --shadow-md: 0 4px 10px rgba(22, 29, 24, 0.05), 0 10px 25px rgba(22, 29, 24, 0.04);
+  --shadow-lg: 0 12px 30px rgba(22, 29, 24, 0.07), 0 20px 50px rgba(22, 29, 24, 0.05);
+  --shadow-glow: 0 8px 28px var(--brand-gold-glow);
 
-  /* Radii */
+  /* ─── Radii ─── */
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 20px;
+  --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* Typography */
+  /* ─── Typography ─── */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 
-  /* Transitions */
-  --transition-fast: 0.15s ease-in-out;
-  --transition-normal: 0.3s ease-in-out;
+  /* ─── Transitions ─── */
+  --transition-fast: 0.18s ease;
+  --transition-normal: 0.28s ease;
 }
 
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background: radial-gradient(circle at top left, #f3f4f6 0%, #e2e8f0 100%);
+  background:
+    radial-gradient(1200px circle at 0% 0%, rgba(203, 172, 112, 0.08), transparent 60%),
+    radial-gradient(1000px circle at 100% 100%, rgba(110, 139, 106, 0.06), transparent 60%),
+    var(--color-bg-main);
   background-attachment: fixed;
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -93,38 +111,28 @@ button {
   font-family: inherit;
 }
 
+/* Serif display utility for headings */
+.font-serif-display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
 /* Animations */
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.animate-fade-in {
-  animation: fadeIn var(--transition-normal) forwards;
-}
+.animate-fade-in { animation: fadeIn var(--transition-normal) forwards; }
+.animate-slide-in { animation: slideIn var(--transition-normal) forwards; }
 
-.animate-slide-in {
-  animation: slideIn var(--transition-normal) forwards;
-}
-
-/* Utility Layout Classes */
+/* ─── Layout ─── */
 .dashboard-layout {
   display: flex;
   height: 100vh;
@@ -132,14 +140,13 @@ button {
 }
 
 .sidebar {
-  width: 280px;
-  background-color: var(--color-bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  width: 260px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbf8f2 100%);
   border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   height: 100vh;
+  box-shadow: 1px 0 0 rgba(44, 62, 51, 0.02), 6px 0 20px rgba(44, 62, 51, 0.02);
 }
 
 .main-content {
@@ -152,7 +159,7 @@ button {
 
 .header {
   height: 72px;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
@@ -161,13 +168,21 @@ button {
   justify-content: space-between;
   padding: 0 32px;
   z-index: 10;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .scrollable-content {
   flex: 1;
   overflow-y: auto;
   padding: 32px;
+}
+
+.scrollable-content::-webkit-scrollbar { width: 10px; }
+.scrollable-content::-webkit-scrollbar-track { background: transparent; }
+.scrollable-content::-webkit-scrollbar-thumb {
+  background: rgba(44, 62, 51, 0.12);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 .dashboard-grid {
@@ -189,7 +204,5 @@ button {
 }
 
 @media (max-width: 1024px) {
-  .dashboard-row {
-    grid-template-columns: 1fr;
-  }
+  .dashboard-row { grid-template-columns: 1fr; }
 }
