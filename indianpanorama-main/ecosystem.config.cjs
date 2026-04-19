@@ -4,8 +4,9 @@ module.exports = {
     apps: [
         {
             name: 'indian-panorama-api',
-            script: './backend/server.js',
-            cwd: '/home/ubuntu/indianpanorama',
+            script: 'server.js',
+            cwd: '/var/www/indianpanorama/backend',
+            exec_mode: 'fork',
             env_production: {
                 NODE_ENV: 'production',
             },
@@ -13,15 +14,16 @@ module.exports = {
             autorestart: true,
             watch: false,
             max_memory_restart: '500M',
-            error_file: './logs/api-error.log',
-            out_file: './logs/api-out.log',
+            error_file: '/var/www/indianpanorama/logs/api-error.log',
+            out_file: '/var/www/indianpanorama/logs/api-out.log',
             log_date_format: 'YYYY-MM-DD HH:mm:ss',
         },
         {
             name: 'indian-panorama-web',
-            script: 'npm',
+            script: './node_modules/next/dist/bin/next',
             args: 'start',
-            cwd: '/home/ubuntu/indianpanorama/frontend',
+            cwd: '/var/www/indianpanorama/frontend',
+            exec_mode: 'fork',
             env_production: {
                 NODE_ENV: 'production',
                 PORT: 3000,
@@ -30,8 +32,8 @@ module.exports = {
             autorestart: true,
             watch: false,
             max_memory_restart: '500M',
-            error_file: './logs/web-error.log',
-            out_file: './logs/web-out.log',
+            error_file: '/var/www/indianpanorama/logs/web-error.log',
+            out_file: '/var/www/indianpanorama/logs/web-out.log',
             log_date_format: 'YYYY-MM-DD HH:mm:ss',
         }
     ]
