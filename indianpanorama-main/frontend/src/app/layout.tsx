@@ -14,7 +14,7 @@ const restaurantJsonLd = {
   name: "Indian Panorama Chelsea",
   alternateName: "Indian Panorama",
   description:
-    "Top-rated Indian dining and takeaway in Chelsea. Authentic regional Indian fine dining on Draycott Avenue, SW3 London. Slow-cooked curries, charcoal-kissed tandoor, signature Raan-e-Panorama and lobster panchphoran.",
+    "Top-rated Indian dining in Chelsea. Authentic regional Indian fine dining on Draycott Avenue, SW3 London. Slow-cooked curries, charcoal-kissed tandoor, signature Raan-e-Panorama and lobster panchphoran.",
   url: SITE_URL,
   telephone: "+442030514535",
   email: "info@indianpanoramachelsea.co.uk",
@@ -96,9 +96,9 @@ const websiteJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: "Indian Restaurant Near Me | Indian Panorama Chelsea | SW3 London",
+  title: "Indian Restaurant Chelsea | Fine Dining & Lunch | Indian Panorama",
   description:
-    "Top-rated Indian dining and takeaway in Chelsea. Experience authentic flavors at Indian Panorama, located near Draycott Avenue, SW3 London. Slow-cooked curries, charcoal-kissed tandoor and signature regional dishes. Book your table online.",
+    "Experience authentic Indian fine dining in the heart of Chelsea. Indian Panorama presents a thoughtfully crafted menu in an elegant atmosphere. Reserve a table.",
   keywords: [
     // Core Location & High-Intent (Local SEO)
     "indian restaurant chelsea london",
@@ -168,9 +168,9 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://indianpanoramachelsea.co.uk",
     siteName: "Indian Panorama Chelsea",
-    title: "Indian Restaurant Near Me | Indian Panorama Chelsea | SW3 London",
+    title: "Indian Restaurant Chelsea | Fine Dining & Lunch | Indian Panorama",
     description:
-      "Authentic regional Indian fine dining on Draycott Avenue, Chelsea. Slow-cooked curries, charcoal-kissed tandoor, signature Raan-e-Panorama and lobster panchphoran.",
+      "Experience authentic Indian fine dining in the heart of Chelsea. Indian Panorama presents a thoughtfully crafted menu in an elegant atmosphere. Reserve a table.",
     images: [
       {
         url: "/images/hero.png",
@@ -182,9 +182,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Indian Restaurant Near Me | Indian Panorama Chelsea | SW3 London",
+    title: "Indian Restaurant Chelsea | Fine Dining & Lunch | Indian Panorama",
     description:
-      "Authentic regional Indian fine dining on Draycott Avenue, Chelsea. Signature Old Delhi butter chicken, Raan-e-Panorama and lobster panchphoran.",
+      "Experience authentic Indian fine dining in the heart of Chelsea. Indian Panorama presents a thoughtfully crafted menu in an elegant atmosphere. Reserve a table.",
     images: [
       {
         url: "/images/hero.png",
@@ -251,6 +251,24 @@ export default function RootLayout({
             gtag('config', '${GOOGLE_ADS_ID}');
           `}
         </Script>
+
+        {/* Google Translate — multilingual support */}
+        <Script id="google-translate-init" strategy="afterInteractive">
+          {`
+            window.googleTranslateElementInit = function() {
+              new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr,es,it,ar,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+              }, 'google_translate_element');
+            };
+          `}
+        </Script>
+        <Script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
       </head>
       <body className="antialiased">
         <VisitorTracker />

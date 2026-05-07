@@ -4,14 +4,14 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Book a Table | Indian Panorama Chelsea — Reserve Online SW3",
+    title: "Book a Table | Indian Restaurant Chelsea | Indian Panorama",
     description:
-        "Reserve your table at Indian Panorama Chelsea on Draycott Avenue, SW3. Authentic regional Indian dining minutes from Sloane Square, South Kensington and Knightsbridge. Book online in under a minute.",
+        "Secure your reservation for an unforgettable dining experience. Join us for sophisticated Indian cuisine and quiet elegance in the heart of Chelsea.",
     alternates: { canonical: "/reservation" },
     openGraph: {
-        title: "Book a Table | Indian Panorama Chelsea — Reserve Online SW3",
+        title: "Book a Table | Indian Restaurant Chelsea | Indian Panorama",
         description:
-            "Reserve your table at Indian Panorama Chelsea on Draycott Avenue, SW3. Book online in under a minute.",
+            "Secure your reservation for an unforgettable dining experience. Join us for sophisticated Indian cuisine and quiet elegance in the heart of Chelsea.",
         url: "https://indianpanoramachelsea.co.uk/reservation",
     },
 };
@@ -33,7 +33,7 @@ export default function ReservationPage() {
             </div>
 
             <h1 className="sr-only">
-                Book a Table at Indian Panorama Chelsea — Reserve Online in SW3 London
+                Reserve Your Experience at Indian Panorama
             </h1>
 
             <div className="relative z-10"> {/* Offset for fixed header height */}

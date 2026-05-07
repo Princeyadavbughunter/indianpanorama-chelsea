@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import ReservationDrawer from "@/components/home/ReservationDrawer";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,11 +15,10 @@ const Header = () => {
         {
             name: "MENUS",
             submenu: [
-                { name: "Main Menu", href: "https://reed-mackerel-4ymk.squarespace.com/s/Indian-Panorama-Chelsea-Main-Menu.pdf", external: true },
-                { name: "Lunch", href: "https://static1.squarespace.com/static/68fa2bcde29fd26b01a84413/t/68fa9d3239cca44b985ddc8f/1761254706568/Lunch+Menu.pdf", external: true },
-                { name: "Drinks", href: "/menu/drinks menu 02.2026.pdf", external: true },
-                { name: "Private Dining", href: "https://reed-mackerel-4ymk.squarespace.com/s/Indian-Panorama-Chelsea-Private-Dining-FINAL.pdf", external: true },
-                { name: "Takeaway", href: "/menu/A4 Long Takeaway Menu 02.2026-1.pdf", external: true }
+                { name: "Main Menu", href: "/menu", external: false },
+                { name: "Lunch", href: "/menu/lunch", external: false },
+                { name: "Drinks", href: "/menu/drinks", external: false },
+                { name: "Private Dining", href: "/menu/private-dining", external: false }
             ]
         },
         { name: "GROUP BOOKINGS", href: "/group" },
@@ -133,6 +133,9 @@ const Header = () => {
                             )
                         )
                     ))}
+
+                    {/* Language Switcher (desktop) */}
+                    <LanguageSwitcher variant="header" className="ml-2" />
                 </nav>
 
                 {/* Mobile Menu Button */}
@@ -149,13 +152,13 @@ const Header = () => {
 
             {/* Mobile Navigation Drawer */}
             <div
-                className={`fixed top-[94px] left-0 right-0 z-40 bg-[#161d18] flex flex-col items-start justify-start transition-all duration-500 ease-in-out lg:hidden rounded-b-[30px] overflow-hidden ${isMenuOpen ? 'max-h-[60vh] opacity-100 border-b border-[#CBAC70]' : 'max-h-0 opacity-0'
+                className={`fixed top-[94px] left-0 right-0 z-40 bg-[#161d18] flex flex-col items-start justify-start transition-all duration-500 ease-in-out lg:hidden rounded-b-[30px] ${isMenuOpen ? 'max-h-[calc(100vh-94px)] opacity-100 border-b border-[#CBAC70] overflow-y-auto' : 'max-h-0 opacity-0 overflow-hidden'
                     }`}
                 style={{
                     boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
                 }}
             >
-                <nav className="flex flex-col items-start space-y-6 pl-10 py-10 w-full">
+                <nav className="flex flex-col items-start space-y-6 pl-10 pr-6 py-10 pb-14 w-full">
                     {navItems.map((item) => (
                         item.submenu ? (
                             <div key={item.name} className="flex flex-col items-start w-full">
@@ -209,6 +212,11 @@ const Header = () => {
                             )
                         )
                     ))}
+
+                    {/* Language Switcher (mobile) — opens upward to avoid clipping */}
+                    <div className="pt-2">
+                        <LanguageSwitcher variant="footer" />
+                    </div>
                 </nav>
             </div>
 

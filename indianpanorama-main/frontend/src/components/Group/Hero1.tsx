@@ -29,8 +29,8 @@ const Hero1 = () => {
                         className="font-serif text-[#f5ecd8] text-3xl md:text-5xl lg:text-6xl leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                         style={{ letterSpacing: "0.02em" }}
                     >
-                        Private Dining & Group Bookings<br className="hidden md:block" />
-                        <span className="italic text-[#CBAC70]"> at Indian Panorama Chelsea</span>
+                        Gather &amp; Celebrate:<br className="hidden md:block" />
+                        <span className="italic text-[#CBAC70]"> Group Dining in Chelsea</span>
                     </h1>
                 </div>
             </div>

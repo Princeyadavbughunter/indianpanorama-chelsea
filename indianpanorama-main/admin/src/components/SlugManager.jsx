@@ -4,6 +4,24 @@ import { Plus, Edit2, Trash2, X, ExternalLink, ChevronDown, ChevronUp, Image as 
 const API_URL = import.meta.env.VITE_API_URL;
 const AUTH = { 'Authorization': 'Bearer leela_admin_secret_123' };
 
+// Public site URL for "Open live page" links.
+// Priority: VITE_SITE_URL env > derive from admin hostname (admin.X → X) > localhost fallback.
+const SITE_URL = (() => {
+    const env = import.meta.env.VITE_SITE_URL;
+    if (env) return env.replace(/\/$/, '');
+    if (typeof window !== 'undefined') {
+        const { protocol, hostname, port } = window.location;
+        if (hostname.startsWith('admin.')) {
+            return `${protocol}//${hostname.replace(/^admin\./, '')}`;
+        }
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return `${protocol}//${hostname}:3000`;
+        }
+        return `${protocol}//${hostname}${port ? ':' + port : ''}`;
+    }
+    return 'http://localhost:3000';
+})();
+
 const BUTTON_STYLE_OPTIONS = [
     { value: 'gold', label: 'Gold (primary)' },
     { value: 'outline', label: 'Outline (dark)' },
@@ -424,7 +442,7 @@ export function SlugManager() {
                                 <button onClick={() => handleEdit(item)} style={{ background: 'transparent', border: 'none', color: 'var(--color-text-secondary)', cursor: 'pointer', padding: 4 }} title="Edit"><Edit2 size={16} /></button>
                                 <button onClick={() => handleDelete(item._id)} style={{ background: 'transparent', border: 'none', color: 'var(--color-danger)', cursor: 'pointer', padding: 4 }} title="Delete"><Trash2 size={16} /></button>
                                 {item.status === 'Published' && (
-                                    <a href={`http://localhost:3000/${item.slug}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand-gold-deep)', padding: 4, display: 'flex', alignItems: 'center' }} title="Open live page">
+                                    <a href={`${SITE_URL}/${item.slug}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand-gold-deep)', padding: 4, display: 'flex', alignItems: 'center' }} title="Open live page">
                                         <ExternalLink size={16} />
                                     </a>
                                 )}

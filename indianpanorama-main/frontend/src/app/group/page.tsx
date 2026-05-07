@@ -6,14 +6,14 @@ import Footer from "@/components/home/footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Private Dining & Group Bookings Chelsea SW3 | Indian Panorama",
+    title: "Group Dining & Restaurant Events Chelsea | Indian Panorama",
     description:
-        "Host private dining and group bookings for up to 80 guests (200 standing) at Indian Panorama Chelsea. Authentic regional Indian cuisine on Draycott Avenue, SW3 London. Enquire today.",
+        "Gather with colleagues or loved ones in a refined setting. Indian Panorama accommodates group bookings with seamless service and a spectacular Indian menu.",
     alternates: { canonical: "/group" },
     openGraph: {
-        title: "Private Dining & Group Bookings Chelsea SW3 | Indian Panorama",
+        title: "Group Dining & Restaurant Events Chelsea | Indian Panorama",
         description:
-            "Private hire for up to 80 seated or 200 standing at Indian Panorama Chelsea — authentic regional Indian fine dining on Draycott Avenue, SW3.",
+            "Gather with colleagues or loved ones in a refined setting. Indian Panorama accommodates group bookings with seamless service and a spectacular Indian menu.",
         url: "https://indianpanoramachelsea.co.uk/group",
     },
 };
