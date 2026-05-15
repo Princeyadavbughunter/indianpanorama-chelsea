@@ -42,20 +42,36 @@ const Hero = () => {
         <section
             className="relative w-full overflow-hidden mt-[94px] h-[600px] md:h-[760px] lg:h-[88vh] min-h-[600px] lg:min-h-[760px]"
         >
-            {/* Parallax background image with overlays */}
+            {/* Parallax background — video with image fallback + overlays */}
             <div
                 ref={bgRef}
                 className="absolute inset-0 z-0"
                 style={{ willChange: "transform" }}
             >
+                {/* Poster image — shown until video can play, and as fallback for reduced-motion */}
                 <Image
                     src="/images/hero.png"
                     alt="Top-rated Indian dining room at Indian Panorama Chelsea, Draycott Avenue SW3"
                     fill
                     priority
-                    className="object-cover object-center hero-img-zoom"
+                    className="object-cover object-center"
                     sizes="100vw"
                 />
+
+                {/* Background video — autoplay, muted, looped */}
+                <video
+                    className="absolute inset-0 w-full h-full object-cover object-center hero-video-fade"
+                    src="/videos/hero.mp4"
+                    poster="/images/hero.png"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    aria-hidden="true"
+                />
+
+                {/* Dark gradient + radial vignette overlays */}
                 <div className="absolute inset-0 bg-gradient-to-b from-[#161d18]/70 via-[#161d18]/40 to-[#161d18]/85" />
                 <div
                     className="absolute inset-0"
@@ -183,6 +199,22 @@ const Hero = () => {
                 }
                 .animate-bounce-slow {
                     animation: bounce-slow 2.4s ease-in-out infinite;
+                }
+
+                /* Smooth video fade-in so it doesn't pop over the poster */
+                .hero-video-fade {
+                    opacity: 0;
+                    animation: hero-video-in 900ms ease-out 250ms forwards;
+                }
+                @keyframes hero-video-in {
+                    to { opacity: 1; }
+                }
+
+                /* Respect reduced motion — hide video, keep poster image visible */
+                @media (prefers-reduced-motion: reduce) {
+                    .hero-video-fade {
+                        display: none;
+                    }
                 }
             `}</style>
         </section>
