@@ -1,6 +1,38 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+/**
+ * Inject Google Translate Element only when needed:
+ * - On mount if a googtrans cookie already exists (returning user with non-EN choice)
+ * - On first dropdown open (so first-time visitors with default EN don't pay for it)
+ */
+function ensureGoogleTranslateLoaded() {
+    if (typeof window === "undefined") return;
+    if ((window as unknown as { __googTransLoaded?: boolean }).__googTransLoaded) return;
+    (window as unknown as { __googTransLoaded?: boolean }).__googTransLoaded = true;
+
+    // Init callback Google's script will call
+    (window as unknown as { googleTranslateElementInit?: () => void }).googleTranslateElementInit = function () {
+        const g = (window as unknown as { google?: { translate?: { TranslateElement?: new (...args: unknown[]) => unknown } } }).google;
+        const TE = g?.translate?.TranslateElement;
+        if (!TE) return;
+        new TE(
+            {
+                pageLanguage: "en",
+                includedLanguages: "en,fr,es,it,ar,zh-CN",
+                autoDisplay: false,
+            },
+            "google_translate_element"
+        );
+    };
+
+    const script = document.createElement("script");
+    script.src =
+        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    script.async = true;
+    document.head.appendChild(script);
+}
 
 type Lang = {
     code: string;       // googtrans target code
@@ -62,7 +94,19 @@ export default function LanguageSwitcher({ variant = "header", className = "" }:
     const ref = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        setCurrent(readCurrentLang());
+        const lang = readCurrentLang();
+        setCurrent(lang);
+        // If user already picked a non-default language, load Google Translate immediately
+        // so the page renders translated. Otherwise wait until the picker is opened.
+        if (lang && lang !== "en") {
+            ensureGoogleTranslateLoaded();
+        }
+    }, []);
+
+    const handleOpen = useCallback(() => {
+        // First time someone opens the picker, pre-load Google Translate so the switch is instant.
+        ensureGoogleTranslateLoaded();
+        setOpen((v) => !v);
     }, []);
 
     useEffect(() => {
@@ -90,7 +134,7 @@ export default function LanguageSwitcher({ variant = "header", className = "" }:
         <div ref={ref} className={`relative notranslate ${className}`} translate="no">
             <button
                 type="button"
-                onClick={() => setOpen((v) => !v)}
+                onClick={handleOpen}
                 aria-label="Change language"
                 aria-expanded={open}
                 className={`group inline-flex items-center gap-2 transition-colors ${

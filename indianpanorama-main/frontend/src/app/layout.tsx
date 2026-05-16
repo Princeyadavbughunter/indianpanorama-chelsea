@@ -252,23 +252,11 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Google Translate — multilingual support */}
-        <Script id="google-translate-init" strategy="afterInteractive">
-          {`
-            window.googleTranslateElementInit = function() {
-              new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,fr,es,it,ar,zh-CN',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-              }, 'google_translate_element');
-            };
-          `}
-        </Script>
-        <Script
-          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
+        {/* Google Translate is now lazy-loaded by LanguageSwitcher only when needed.
+            Two cases:
+              1. User already chose a language (googtrans cookie present) → load on hydration
+              2. User opens the language picker → load on click
+            This saves ~250KB and 2 external requests on first paint. */}
       </head>
       <body className="antialiased">
         <VisitorTracker />
