@@ -60,7 +60,7 @@ const Hero = () => {
                 {/* Background video — autoplay, muted, looped (no overlay, full transparency) */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover object-center hero-video-fade"
-                    src="/videos/hero-v2.mp4"
+                    src="/videos/hero-v3.mp4"
                     poster="/images/hero.png"
                     autoPlay
                     loop
@@ -76,8 +76,8 @@ const Hero = () => {
                 Refined Indian Fine Dining & Lunch in Chelsea
             </h1>
 
-            {/* Buttons only */}
-            <div className="relative z-10 w-full h-full flex items-center justify-center px-6">
+            {/* Buttons — anchored to bottom of the hero */}
+            <div className="relative z-10 w-full h-full flex items-end justify-center px-6 pb-10 md:pb-16">
                 <Reveal direction="up" delay={400} duration={900} distance={16} className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5">
                     {/* Primary CTA — gold filled */}
                     <button
