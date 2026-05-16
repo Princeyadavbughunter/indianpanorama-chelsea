@@ -60,7 +60,7 @@ const Hero = () => {
                 {/* Background video — autoplay, muted, looped (no overlay, full transparency) */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover object-center hero-video-fade"
-                    src="/videos/hero.mp4"
+                    src="/videos/hero-v2.mp4"
                     poster="/images/hero.png"
                     autoPlay
                     loop
